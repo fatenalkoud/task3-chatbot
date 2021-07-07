@@ -1,0 +1,293 @@
+{
+  "intents": [
+    {
+      "intent": "answer",
+      "examples": [
+        {
+          "text": "are you okay"
+        },
+        {
+          "text": "how are you"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "time",
+      "examples": [
+        {
+          "text": "when are you working"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-date",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-time",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "time",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "when i found you",
+          "synonyms": [
+            "what time"
+          ]
+        }
+      ],
+      "fuzzy_match": false
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_7_1625724971991",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1625725045362",
+      "context": {
+        "date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_10_1625725045669"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1625725627523",
+      "context": {
+        "number": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_2_1625725627526"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1625725576134",
+      "context": {
+        "time": "@sys-time"
+      },
+      "conditions": "@sys-time",
+      "event_name": "input",
+      "dialog_node": "handler_3_1625725576137"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "how much "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_8_1625725627523",
+      "event_name": "focus",
+      "dialog_node": "handler_7_1625725627526",
+      "previous_sibling": "handler_2_1625725627526"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "what date"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_3_1625725045362",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1625725045669",
+      "previous_sibling": "handler_10_1625725045669"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "what time"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_3_1625725576134",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1625725576137",
+      "previous_sibling": "handler_3_1625725576137"
+    },
+    {
+      "type": "standard",
+      "title": "hi",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "can i help you"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "node_1_1625724167885"
+    },
+    {
+      "type": "standard",
+      "title": "answer",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "yes , i am okay ..and you ? "
+              },
+              {
+                "text": "i am fine "
+              },
+              {
+                "text": "good"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#answer",
+      "dialog_node": "node_7_1625724471422",
+      "previous_sibling": "node_1_1625724167885"
+    },
+    {
+      "type": "frame",
+      "title": "time",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "done"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#time",
+      "dialog_node": "node_7_1625724971991",
+      "previous_sibling": "node_7_1625724471422"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1625724971991",
+      "variable": "$date",
+      "dialog_node": "slot_3_1625725045362"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1625724971991",
+      "variable": "$time",
+      "dialog_node": "slot_3_1625725576134",
+      "previous_sibling": "slot_3_1625725045362"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1625724971991",
+      "variable": "$number",
+      "dialog_node": "slot_8_1625725627523",
+      "previous_sibling": "slot_3_1625725576134"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "talking",
+  "language": "en",
+  "description": ""
+}
